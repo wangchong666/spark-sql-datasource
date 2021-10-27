@@ -143,7 +143,7 @@ object JdbcUtils extends Logging {
           .map { x => dialect.quoteIdentifier(x.name) }
           .map { name => if (duplicateIncs.contains(name)) s"$name=$name+?" else s"$name=?" }
           .mkString(",")
-        var key="$table_pkey"
+        var key=s"$table_pkey"
         val sql = s"INSERT INTO $table ($columns) VALUES ($placeholders) ON CONFLICT $key DO UPDATE $duplicateSetting"
         if (props.getProperty("showSql", "false").equals("true")) {
           println(s"${JDBCSaveMode.Update} => sql => $sql")
